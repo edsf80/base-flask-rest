@@ -1,14 +1,14 @@
-from app import db
-from app import ma
+from model import db, ma
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.String(80), nullable=False)
 
-class UserSchema(ma.SQLAlchemyAutoSchema):
+class UserSchema(ma.Schema):
     class Meta:
-        model = User
+        # Fields to expose
+        fields = ("id", "username", "_links")
 
     # Smart hyperlinking
     _links = ma.Hyperlinks(
