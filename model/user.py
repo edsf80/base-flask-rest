@@ -1,5 +1,5 @@
 from model import db, ma
-from marshmallow_sqlalchemy import SQLAlchemyAutoSchema, auto_field
+from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
