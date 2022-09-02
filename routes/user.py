@@ -2,6 +2,16 @@ from flask import Blueprint, request
 from model.user import User, users_schema, user_schema
 from model import db
 from flask_jwt_extended import jwt_required
+from flask_expects_json import expects_json
+
+schema = {
+  "type": "object",
+  "properties": {
+    "username": { "type": "string" },
+    "password": { "type": "string" }
+  },
+  "required": ["username", "password"]
+}
 
 user_bp = Blueprint('users', __name__, url_prefix='/users')
 
@@ -15,9 +25,10 @@ def get_users():
 
 @user_bp.route('/', methods=['POST'])
 @jwt_required()
-def post_user():
-    content = request.json
-    user = User(username=content['username'], password=content['password'])
+@expects_json(schema)
+def post_user():    
+    user = user_schema.load(request.json)
+    print(type(user))
     db.session.add(user)
     db.session.commit()
     return user_schema.dump(user)

@@ -12,7 +12,7 @@ schema = {
   "required": ["username", "password"]
 }
 
-auth_bp = Blueprint('auth', __name__, url_prefix='/auth')
+auth_bp = Blueprint('auth', __name__, url_prefix='/api/auth')
 
 @auth_bp.route('/login', methods=['POST'])
 @expects_json(schema)
